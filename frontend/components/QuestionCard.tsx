@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Step } from '@/lib/triageData';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface QuestionCardProps {
     step: Step;
-    onAnswer: (answer: any) => void;
+    onAnswer: (answer: string | null) => void;
     loading: boolean;
     history?: { id: string; question: string; answer: string; label?: string }[];
     onBack?: () => void;

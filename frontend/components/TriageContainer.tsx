@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Step } from '@/lib/triageData';
 import QuestionCard from './QuestionCard';
 import Breadcrumbs from './Breadcrumbs';
@@ -9,6 +9,43 @@ export default function TriageContainer() {
     const [currentStep, setCurrentStep] = useState<Step | null>(null);
     const [history, setHistory] = useState<{ id: string; question: string; answer: string; label?: string }[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const fetchNextStep = useCallback(async (currentStepId: string, answer: string | null | undefined) => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/triage/next', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentStepId, answer }),
+            });
+
+            if (!res.ok) throw new Error('Failed to fetch step');
+
+            const data = await res.json();
+            setCurrentStep(data.nextStep);
+
+            if (currentStepId !== 'start' && currentStep) {
+                // Find readable answer if it's a choice
+                let readableAnswer = answer || '';
+                if (currentStep.options) {
+                    const selectedOption = currentStep.options.find(opt => opt.value === answer);
+                    if (selectedOption) readableAnswer = selectedOption.label;
+                }
+
+                setHistory(prev => [...prev, {
+                    id: currentStepId,
+                    question: currentStep.question || '',
+                    answer: readableAnswer,
+                    label: currentStep.summaryLabel || currentStep.question
+                }]);
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle error (e.g. show toast)
+        } finally {
+            setLoading(false);
+        }
+    }, [currentStep]);
 
     useEffect(() => {
         // Load state from localStorage
@@ -28,7 +65,7 @@ export default function TriageContainer() {
             // Initial load - start step
             fetchNextStep('start', null);
         }
-    }, []);
+    }, [fetchNextStep]);
 
     // Save history to localStorage whenever it changes
     useEffect(() => {
@@ -44,44 +81,7 @@ export default function TriageContainer() {
         }
     }, [currentStep]);
 
-    const fetchNextStep = async (currentStepId: string, answer: any) => {
-        setLoading(true);
-        try {
-            const res = await fetch('/api/triage/next', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ currentStepId, answer }),
-            });
-
-            if (!res.ok) throw new Error('Failed to fetch step');
-
-            const data = await res.json();
-            setCurrentStep(data.nextStep);
-
-            if (currentStepId !== 'start' && currentStep) {
-                // Find readable answer if it's a choice
-                let readableAnswer = answer;
-                if (currentStep.options) {
-                    const selectedOption = currentStep.options.find(opt => opt.value === answer);
-                    if (selectedOption) readableAnswer = selectedOption.label;
-                }
-
-                setHistory(prev => [...prev, {
-                    id: currentStepId,
-                    question: currentStep.question || '',
-                    answer: readableAnswer,
-                    label: currentStep.summaryLabel || currentStep.question
-                }]);
-            }
-        } catch (error) {
-            console.error(error);
-            // Handle error (e.g. show toast)
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleAnswer = (answer: any) => {
+    const handleAnswer = (answer: string | null) => {
         if (currentStep) {
             fetchNextStep(currentStep.id, answer);
         }

@@ -16,11 +16,14 @@ export const metadata: Metadata = {
   title: "Ilumino - Lançando luz sobre sua saúde",
   description: "Preparação inteligente para exames e consultas.",
   manifest: "/manifest.json",
-  themeColor: "#ffffff",
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
   },
+};
+
+export const viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({

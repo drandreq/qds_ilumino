@@ -1,18 +1,19 @@
 import TriageContainer from '@/components/TriageContainer';
 import AnimatedTips from '@/components/AnimatedTips';
+import Link from 'next/link';
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center">
       <AnimatedTips />
-      <a href="/">
+      <Link href="/">
         <div className="w-full max-w-3xl text-center mt-12 mb-8 px-4">
           <h1 className="text-3xl font-bold text-blue-900 mb-2 hover:text-blue-700 transition-colors">
             Ilumino
           </h1>
           <p className="text-gray-600">Lançando luz sobre sua saúde.</p>
         </div>
-      </a>
+      </Link>
 
       <TriageContainer />
 

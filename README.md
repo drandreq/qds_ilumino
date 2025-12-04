@@ -22,15 +22,10 @@ O **Ilumino Health** é uma aplicação Progressive Web App (PWA) que empodera p
 - **Monique Flor**
 - **Juliana Fiusa**
 
-**Ferramentas:**
-- **Rodrigo Narciso** - Public Politics Business Canvas Toolkit
+**Framework de business canva para políticas públicas:**
+- **Rodrigo Narciso**
 
-**Evento:** Hackathon FGV - Congresso Internacional de Políticas Públicas em Saúde na Era da Informação
-
-**Desenvolvido com esteroides:**
-- 🚀 **Antigravity** (Google Deepmind)
-- 🤖 **Gemini 3** (Google AI)
-- 🧠 **Claude Sonnet 4.5** (Anthropic)
+**Evento:** Hackathon FGV - Congresso Internacional de Políticas Públicas em Saúde na Era da Informação 2025
 
 ## 📊 Estrutura de Dados
 
@@ -87,7 +82,7 @@ graph TD
   - Feedback tátil (haptics)
 
 - ✅ **Privacidade**
-  - Não armazena dados pessoais
+  - Não armazena dados pessoais em servidores externos
   - Processamento local no navegador
   - Sem login ou API
 
@@ -196,12 +191,11 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
 5. Abrir um Pull Request
 
-## 🗺️ Roadmap
+## 🗺️ Roadmap futuro
 
-- [ ] Sprint 4: PDF Generation & Red Flags
+- [ ] Sprint 4: Geração de relatório em PDF e alerta de sinais de gravidade do quadro atual
 - [ ] Sprint 5: Acessibilidade (A11y audit)
-- [ ] Integração com APIs de agendamento
-- [ ] Chatbot com IA para dúvidas livres
+- [ ] Sprint 6: Chatbot simples com IA para dúvidas livres e retroalimentação da FAQ
 
 ## 📄 Licença
 
@@ -214,5 +208,5 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-**Desenvolvido com ❤️ durante o Hackathon FGV 2024**  
-**Powered by Antigravity 🚀 | Gemini 3 🤖 | Claude Sonnet 4.5 🧠**
+**Desenvolvido com 🫀🧠🤖 durante o Hackathon FGV 2025**  
+**Powered by Human Intelligence 🧠 & Antigravity 🚀 with Gemini 3 🤖 & Claude Sonnet 4.5 🤖**
