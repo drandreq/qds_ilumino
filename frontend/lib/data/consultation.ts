@@ -176,27 +176,13 @@ export const consultationFlow: Record<string, Step> = {
         summaryLabel: 'Tipo de Parto',
         whyAsk: 'Informações sobre o nascimento podem ser relevantes para entender certas predisposições ou históricos.',
         options: [
-            { label: 'Normal', value: 'vaginal', nextStepId: 'sex_at_birth' },
-            { label: 'Cesárea', value: 'c_section', nextStepId: 'sex_at_birth' },
-            { label: 'Não sei', value: 'unknown', nextStepId: 'sex_at_birth' },
+            { label: 'Normal', value: 'vaginal', nextStepId: 'menstruation_history' },
+            { label: 'Cesárea', value: 'c_section', nextStepId: 'menstruation_history' },
+            { label: 'Não sei', value: 'unknown', nextStepId: 'menstruation_history' },
         ]
     },
 
-    // === Sex-Specific Questions ===
-    'sex_at_birth': {
-        id: 'sex_at_birth',
-        type: 'question',
-        inputType: 'choice',
-        question: 'Para personalizarmos seu atendimento, qual foi seu sexo atribuído ao nascer?',
-        summaryLabel: 'Sexo ao nascer',
-        whyAsk: 'Algumas condições de saúde e exames são específicos para cada sexo biológico.',
-        options: [
-            { label: 'Feminino (XX)', value: 'female', nextStepId: 'menstruation_history' },
-            { label: 'Masculino (XY)', value: 'male', nextStepId: 'current_symptoms' },
-        ]
-    },
-
-    // Women's Health
+    // === Sex-Specific Questions (Women's Health) ===
     'menstruation_history': {
         id: 'menstruation_history',
         type: 'question',
