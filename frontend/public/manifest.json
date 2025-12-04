@@ -1,0 +1,16 @@
+{
+  "name": "Ilumino Health",
+  "short_name": "Ilumino",
+  "description": "Lançando luz sobre sua saúde.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

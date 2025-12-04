@@ -1,0 +1,1 @@
+Leia o README.md no diretório raiz para mais informações.
