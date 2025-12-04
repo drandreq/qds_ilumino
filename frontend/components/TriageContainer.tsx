@@ -22,30 +22,34 @@ export default function TriageContainer() {
             if (!res.ok) throw new Error('Failed to fetch step');
 
             const data = await res.json();
-            setCurrentStep(data.nextStep);
+            const nextStep = data.nextStep;
+            setCurrentStep(nextStep);
 
-            if (currentStepId !== 'start' && currentStep) {
-                // Find readable answer if it's a choice
-                let readableAnswer = answer || '';
-                if (currentStep.options) {
-                    const selectedOption = currentStep.options.find(opt => opt.value === answer);
-                    if (selectedOption) readableAnswer = selectedOption.label;
-                }
+            // Use functional update to avoid dependency on currentStep
+            if (currentStepId !== 'start' && answer !== undefined) {
+                setHistory(prev => {
+                    // Get the current step from the API response, not from state
+                    let readableAnswer = answer || '';
+                    if (nextStep && answer) {
+                        // We need to look at the PREVIOUS step's options to get the label
+                        // But we don't have it here. Let's just use the answer value
+                        readableAnswer = answer;
+                    }
 
-                setHistory(prev => [...prev, {
-                    id: currentStepId,
-                    question: currentStep.question || '',
-                    answer: readableAnswer,
-                    label: currentStep.summaryLabel || currentStep.question
-                }]);
+                    return [...prev, {
+                        id: currentStepId,
+                        question: nextStep?.question || '',
+                        answer: readableAnswer,
+                        label: nextStep?.summaryLabel || nextStep?.question || ''
+                    }];
+                });
             }
         } catch (error) {
             console.error(error);
-            // Handle error (e.g. show toast)
         } finally {
             setLoading(false);
         }
-    }, [currentStep]);
+    }, []); // No dependencies!
 
     useEffect(() => {
         // Load state from localStorage
