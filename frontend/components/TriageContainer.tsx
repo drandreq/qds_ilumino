@@ -23,24 +23,28 @@ export default function TriageContainer() {
 
             const data = await res.json();
             const nextStep = data.nextStep;
+            const currentStepData = data.currentStep;
             setCurrentStep(nextStep);
 
-            // Use functional update to avoid dependency on currentStep
+            // Save to history with Portuguese labels
             if (currentStepId !== 'start' && answer !== undefined) {
                 setHistory(prev => {
-                    // Get the current step from the API response, not from state
+                    // Get the readable Portuguese answer
                     let readableAnswer = answer || '';
-                    if (nextStep && answer) {
-                        // We need to look at the PREVIOUS step's options to get the label
-                        // But we don't have it here. Let's just use the answer value
-                        readableAnswer = answer;
+
+                    // If it's a choice question, get the label (Portuguese text)
+                    if (currentStepData?.options && answer) {
+                        const selectedOption = currentStepData.options.find((opt: any) => opt.value === answer);
+                        if (selectedOption) {
+                            readableAnswer = selectedOption.label;
+                        }
                     }
 
                     return [...prev, {
                         id: currentStepId,
-                        question: nextStep?.question || '',
+                        question: currentStepData?.question || '',
                         answer: readableAnswer,
-                        label: nextStep?.summaryLabel || nextStep?.question || ''
+                        label: currentStepData?.summaryLabel || currentStepData?.question || ''
                     }];
                 });
             }
